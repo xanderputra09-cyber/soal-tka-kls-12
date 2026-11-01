@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ruang TKA — Bahasa Indonesia Kelas XII</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#172033;--muted:#667085;--accent:#5145cd;--line:#e5e7ef;--soft:#efedff;--good:#16834a;--bad:#c43d46}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+header{background:linear-gradient(120deg,#28216f,#5145cd 65%,#8175ed);color:white;padding:30px 18px}
+.wrap{max-width:900px;margin:auto;padding:0 16px}header h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:12px 0}header p{margin:6px 0;color:#e6e4ff}
+.pill{display:inline-block;border:1px solid #ffffff55;border-radius:99px;padding:4px 10px;font-size:12px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+button{font:inherit;cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:white;color:var(--ink)}
+button.primary,.active{background:var(--accent);color:white;border-color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+main{padding:20px 0 48px}.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:12px 0;box-shadow:0 4px 16px #18234a08}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{background:#ffffff18;border:1px solid #ffffff35;border-radius:12px;padding:10px;text-align:center}.stat b{display:block;font-size:22px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button{flex:1;min-width:110px}
+h2{font-size:22px;margin:0 0 10px}h3{font-size:17px;margin:0 0 6px}.muted{color:var(--muted);font-size:14px}
+.topic{border:1px solid var(--line);border-radius:12px;margin:9px 0;overflow:hidden}.topic summary{padding:13px;font-weight:650;cursor:pointer;background:#fafaff}.topic .inside{padding:13px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.controls>*{flex:1}
+.progress{height:8px;background:#e8e7f1;border-radius:99px;overflow:hidden;margin:10px 0 16px}.progress span{display:block;height:100%;background:var(--accent);width:0}
+.tag{font-size:12px;color:var(--accent);background:var(--soft);padding:4px 9px;border-radius:99px}
+.passage{background:#f8f8fc;border-left:4px solid var(--accent);padding:14px;border-radius:8px;margin:12px 0}
+.option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:11px;margin:8px 0;cursor:pointer}
+.option:has(input:checked){border-color:var(--accent);background:var(--soft)}
+.option input{margin-top:5px;accent-color:var(--accent)}
+.feedback{padding:13px;border-radius:10px;margin-top:12px}.correct{background:#eaf8ef;color:#145c35}.incorrect{background:#fff0f0;color:#8c252c}
+.hidden{display:none!important}.score{font-size:48px;font-weight:800;color:var(--accent)}footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:560px){.stats{gap:6px}.stat b{font-size:18px}.panel{padding:14px}}
+</style></head>
+<body>
+<header><div class="wrap">
+<span class="pill">BAHASA INDONESIA • SMA/SMK KELAS XII</span>
+<h1>Ruang TKA</h1><p>Pendalaman materi, latihan soal, dan pembahasan interaktif.</p>
+<div class="stats"><div class="stat"><b>10</b><small>Indikator</small></div><div class="stat"><b>PG + PGK</b><small>Bentuk soal</small></div><div class="stat"><b>Mandiri</b><small>Belajar kapan saja</small></div></div>
+</div></header>
+<main class="wrap">
+<nav class="tabs"><button class="active" data-view="materi">📚 Materi</button><button data-view="latihan">✍️ Latihan Soal</button><button data-view="hasil">🏆 Hasil</button></nav>
+<section id="materi">
+<div class="panel"><h2>Panduan belajar</h2><p>Pelajari ringkasan konsep, lalu kerjakan latihan. Soal dibuat sebagai latihan berdasarkan 10 indikator pada catatan pendalaman materi. Ini bukan soal resmi atau bocoran TKA.</p></div>
+<div id="topics"></div>
+</section>
+<section id="latihan" class="hidden">
+<div class="panel">
+<div class="controls"><span class="tag" id="kind">Pilihan Ganda</span><span class="muted" id="number">Soal 1 dari 10</span></div>
+<div class="progress"><span id="bar"></span></div>
+<div class="passage" id="passage"></div>
+<h3 id="question"></h3><p class="muted" id="instruction"></p>
+<div id="options"></div><div id="feedback"></div>
+<div class="controls" style="margin-top:16px"><button id="prev">← Sebelumnya</button><button class="primary" id="check">Periksa jawaban</button><button id="next">Berikutnya →</button></div>
+</div><div class="muted">PG: pilih satu jawaban. PGK: pilih semua jawaban yang tepat. Jawaban dan pembahasan tersedia setelah diperiksa.</div>
+</section>
+<section id="hasil" class="hidden"><div class="panel" style="text-align:center"><h2>Hasil latihan</h2><div class="score" id="score">—</div><b id="grade">Belum ada hasil</b><p class="muted" id="summary">Selesaikan dan periksa seluruh soal untuk melihat nilai.</p><button class="primary" id="retry">Ulangi latihan</button></div><div class="panel"><h3>Rincian</h3><p id="details" class="muted">Belum ada jawaban yang dinilai.</p></div></section>
+</main><footer>Ruang TKA • Media latihan belajar mandiri kelas XII</footer>
+<script>
+const topics=[
+["Memahami penggunaan kata serapan","Kata serapan adalah kata dari bahasa lain atau bahasa daerah yang disesuaikan dengan kaidah bahasa Indonesia. Perhatikan bentuk baku, ejaan, dan konteks penggunaannya. Contoh: aktivitas (bukan aktifitas), risiko (bukan resiko), kualitas (bukan kwalitas)."],
+["Mengidentifikasi latar, karakter, dan fenomena dalam teks","Latar meliputi tempat, waktu, dan suasana. Karakter adalah sifat tokoh yang dapat dikenali melalui ucapan, tindakan, pikiran, atau tanggapan tokoh lain. Fenomena adalah peristiwa atau keadaan yang dibahas teks; bedakan fenomena fiksi dan nonfiksi."],
+["Menyusun kerangka atau bagian penting teks","Kerangka teks memuat gagasan utama dan urutan bagian yang logis. Untuk teks eksposisi, misalnya: tesis, rangkaian argumen, dan penegasan ulang. Pilih pokok informasi, bukan detail yang kurang penting."],
+["Menentukan ide pokok, gagasan pendukung, tokoh, dan konflik","Ide pokok merupakan inti paragraf. Gagasan pendukung menjelaskan atau memperkuatnya. Dalam cerita, tokoh adalah pelaku, sedangkan konflik merupakan pertentangan yang menggerakkan cerita."],
+["Memahami hubungan makna antarkalimat dan antarparagraf","Kohesi adalah keterkaitan bentuk bahasa, misalnya kata rujukan, konjungsi, dan pengulangan. Koherensi adalah hubungan makna yang logis. Perhatikan hubungan sebab-akibat, pertentangan, penambahan, urutan, dan perincian."],
+["Memprediksi lanjutan atau akhir cerita","Prediksi yang baik didasarkan pada petunjuk, watak tokoh, konflik, dan alur yang sudah muncul. Prediksi bukan tebakan bebas; harus masuk akal dan konsisten dengan teks."],
+["Menilai relevansi peristiwa dengan kehidupan sehari-hari","Relevansi berarti kesesuaian isi teks dengan situasi nyata atau pengalaman sehari-hari. Hubungkan pesan atau peristiwa dengan contoh yang sejenis, tanpa memaksakan hubungan."],
+["Menilai keakuratan, kesesuaian, dan ketepatan informasi","Informasi akurat didukung bukti dan sumber tepercaya. Periksa tanggal, konteks, data pembanding, serta apakah simpulan benar-benar didukung isi teks. Bedakan fakta, opini, dan asumsi."],
+["Menilai ketepatan penggunaan bahasa","Bahasa efektif harus jelas, hemat, logis, sesuai kaidah, dan cocok dengan tujuan serta pembaca. Hindari pemborosan kata, kalimat ambigu, dan pilihan kata yang tidak baku."],
+["Menyimpulkan respons emosional terhadap puisi, prosa, atau drama","Apresiasi sastra mencakup pemahaman suasana, nada, tema, dan amanat. Respons emosional dapat berupa haru, kagum, prihatin, atau tegang, tetapi harus didukung diksi, peristiwa, dan citraan dalam karya."]
+];
+const qs=[
+{topic:0,type:"PG",passage:"Dalam laporan kegiatan, panitia menuliskan: “Aktifitas literasi dilaksanakan untuk meningkatkan kwalitas bacaan siswa.”",q:"Perbaikan kata tidak baku dalam kalimat tersebut adalah …",opts:["aktivitas dan kualitas","aktifitas dan kualitas","aktivitas dan kwalitas","aktifitas dan kwalitas","aktifitas dan kwalitet"],a:[0],why:"Bentuk baku menurut kaidah bahasa Indonesia adalah aktivitas dan kualitas."},
+{topic:1,type:"PG",passage:"Setiap sore, Damar duduk di halte kecil dekat stasiun. Ia selalu membawa payung meskipun langit tampak cerah. Ketika seorang nenek datang, Damar segera memberikan tempat duduknya.",q:"Sifat Damar yang paling kuat ditunjukkan melalui tindakannya adalah …",opts:["Pemarah","Peduli","Ceroboh","Sombong","Ragu-ragu"],a:[1],why:"Tindakan memberikan tempat duduk kepada nenek menunjukkan kepedulian."},
+{topic:2,type:"PGK",passage:"Perpustakaan sekolah mulai mengembangkan layanan digital. Siswa dapat meminjam buku elektronik melalui aplikasi. Namun, koleksi cetak tetap disediakan bagi siswa yang memiliki keterbatasan akses internet.",q:"Pernyataan yang tepat untuk kerangka isi teks tersebut adalah …",opts:["Pengembangan layanan digital perpustakaan","Cara membuat aplikasi permainan","Peminjaman buku elektronik","Koleksi cetak tetap dipertahankan","Sejarah seluruh perpustakaan di Indonesia"],a:[0,2,3],why:"Ketiga pilihan tersebut mewakili gagasan utama dan informasi penting dalam teks."},
+{topic:3,type:"PG",passage:"Banjir di kawasan permukiman tidak hanya disebabkan oleh curah hujan tinggi. Saluran air yang tersumbat sampah dan berkurangnya daerah resapan turut memperparah keadaan.",q:"Ide pokok paragraf tersebut adalah …",opts:["Hujan selalu menyebabkan banjir","Sampah merupakan satu-satunya penyebab banjir","Beberapa faktor memperparah banjir di permukiman","Daerah resapan tidak memiliki manfaat","Semua permukiman mengalami banjir"],a:[2],why:"Kalimat kedua menjelaskan faktor tambahan, sedangkan kalimat pertama membuka gagasan bahwa banjir memiliki beberapa penyebab."},
+{topic:4,type:"PGK",passage:"Sekolah mengadakan program membawa botol minum sendiri. Program ini bertujuan mengurangi sampah plastik. Selain itu, siswa diajak memilah sampah yang masih dapat didaur ulang. Dengan demikian, kebiasaan ramah lingkungan dapat tumbuh di sekolah.",q:"Hubungan makna yang terdapat dalam teks adalah …",opts:["Tujuan","Penambahan informasi","Sebab-akibat","Pertentangan","Simpulan"],a:[0,1,4],why:"Frasa “bertujuan” menyatakan tujuan, “selain itu” menambahkan informasi, dan “dengan demikian” menandai simpulan."},
+{topic:5,type:"PG",passage:"Nadia menemukan dompet di lorong sekolah. Ia melihat kartu identitas di dalamnya. Saat itu bel pulang berbunyi dan teman-temannya mengajaknya segera pulang.",q:"Lanjutan cerita yang paling logis adalah …",opts:["Nadia membuang dompet itu","Nadia menyimpan dompet tanpa memberi tahu siapa pun","Nadia menyerahkan dompet kepada guru agar dikembalikan kepada pemiliknya","Nadia menyalahkan teman-temannya","Nadia meninggalkan dompet di lorong"],a:[2],why:"Pilihan tersebut konsisten dengan petunjuk kartu identitas dan menunjukkan penyelesaian konflik secara bertanggung jawab."},
+{topic:6,type:"PGK",passage:"Dalam sebuah cerita, warga bekerja sama membersihkan selokan setelah beberapa rumah tergenang air. Mereka membagi tugas dan membuat jadwal kerja bakti rutin.",q:"Nilai yang relevan diterapkan dalam kehidupan sehari-hari adalah …",opts:["Gotong royong","Menjaga kebersihan lingkungan","Mengandalkan satu orang saja","Membuat jadwal kegiatan bersama","Mengabaikan masalah lingkungan"],a:[0,1,3],why:"Kerja sama, kebersihan, dan pembagian jadwal merupakan tindakan nyata yang dapat diterapkan dalam masyarakat."},
+{topic:7,type:"PG",passage:"Sebuah unggahan media sosial menyatakan bahwa 90% siswa di suatu kota tidak suka membaca. Unggahan tersebut tidak menyebutkan jumlah responden, waktu survei, maupun lembaga yang melakukan penelitian.",q:"Penilaian paling tepat terhadap informasi tersebut adalah …",opts:["Pasti benar karena berbentuk angka","Belum dapat dinilai akurat karena metode dan sumber data tidak dijelaskan","Benar karena banyak orang membagikannya","Pasti salah karena berasal dari media sosial","Dapat dianggap fakta tanpa pemeriksaan"],a:[1],why:"Angka statistik perlu disertai sumber, metode, jumlah responden, dan waktu pengumpulan data agar dapat diuji."},
+{topic:8,type:"PGK",passage:"Perhatikan kalimat berikut: “Para siswa-siswa diwajibkan untuk agar membawa buku masing-masing.”",q:"Perbaikan yang membuat kalimat lebih efektif adalah …",opts:["Siswa diwajibkan membawa buku masing-masing.","Para siswa diwajibkan untuk agar membawa buku.","Siswa-siswa diwajibkan agar membawa buku masing-masing.","Setiap siswa wajib membawa bukunya masing-masing.","Para siswa-siswa membawa buku masing-masing."],a:[0,3],why:"Pilihan A dan D menghilangkan pemborosan bentuk jamak serta gabungan kata tugas yang tidak tepat."},
+{topic:9,type:"PGK",passage:"“Di ujung senja, ibu menunggu di beranda. Angin membawa aroma tanah basah. Lampu jalan menyala satu per satu, sementara langkah yang dinanti belum juga terdengar.”",q:"Respons emosional yang dapat didukung oleh kutipan tersebut adalah …",opts:["Suasana haru atau rindu","Kesan menegangkan karena penantian","Kegembiraan pesta yang meriah","Suasana tenang bercampur kesepian","Kemurkaan tokoh yang meledak-ledak"],a:[0,1,3],why:"Penantian, senja, dan langkah yang belum terdengar membangun suasana rindu, sepi, dan sedikit menegangkan. Tidak ada petunjuk pesta atau kemarahan."]
+}
+];
+let index=0,answers=Array(qs.length).fill(null),checked=Array(qs.length).fill(false),scoreDone=false;
+const $=id=>document.getElementById(id);
+$("topics").innerHTML=topics.map((t,i)=>`<details class="topic"><summary>${i+1}. ${t[0]}</summary><div class="inside">${t[1]}<p class="muted"><b>Strategi:</b> Temukan bukti dalam teks sebelum menentukan jawaban.</p></div></details>`).join("");
+function show(view){document.querySelectorAll("main section").forEach(s=>s.classList.toggle("hidden",s.id!==view));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.view===view));if(view==="latihan")render();if(view==="hasil")renderResult()}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>show(b.dataset.view));
+function render(){let q=qs[index];$("kind").textContent=q.type==="PG"?"Pilihan Ganda":"Pilihan Ganda Kompleks";$("number").textContent=`Soal ${index+1} dari ${qs.length}`;$("bar").style.width=((index+1)/qs.length*100)+"%";$("passage").textContent=q.passage;$("question").textContent=q.q;$("instruction").textContent=q.type==="PG"?"Pilih satu jawaban yang paling tepat.":"Pilih semua jawaban yang tepat. Jawaban dinilai benar jika seluruh pilihan tepat.";
+$("options").innerHTML=q.opts.map((o,i)=>`<label class="option"><input type="${q.type==="PG"?"radio":"checkbox"}" name="answer" value="${i}" ${answers[index]?.includes(i)?"checked":""} ${checked[index]?"disabled":""}><span><b>${"ABCDE"[i]}.</b> ${o}</span></label>`).join("");
+$("feedback").innerHTML=checked[index]?`<div class="feedback ${isCorrect(index)?"correct":"incorrect"}"><b>${isCorrect(index)?"Benar!":"Belum tepat."}</b><br>${q.why}<br><b>Kunci: ${q.a.map(i=>"ABCDE"[i]).join(", ")}</b></div>`:"";
+$("prev").disabled=index===0;$("next").textContent=index===qs.length-1?"Lihat hasil":"Berikutnya →";$("check").disabled=checked[index];
+}
+function selected(){return [...document.querySelectorAll('#options input:checked')].map(x=>+x.value).sort()}
+function isCorrect(i){return answers[i]!==null&&answers[i].length===qs[i].a.length&&answers[i].every((v,j)=>v===qs[i].a.slice().sort()[j])}
+$("options").addEventListener("change",()=>{if(checked[index])return;answers[index]=selected()});
+$("check").onclick=()=>{if(!answers[index]||!answers[index].length){$("feedback").innerHTML='<div class="feedback incorrect">Pilih jawaban terlebih dahulu.</div>';return}checked[index]=true;render()};
+$("prev").onclick=()=>{if(index>0){index--;render()}};
+$("next").onclick=()=>{if(index<qs.length-1){index++;render()}else show("hasil")};
+function renderResult(){let n=checked.filter(Boolean).length;if(n<qs.length){$("score").textContent="—";$("grade").textContent="Latihan belum selesai";$("summary").textContent=`Baru ${n} dari ${qs.length} soal yang diperiksa.`;$("details").textContent="Selesaikan dan periksa semua soal untuk memperoleh nilai.";return}let c=qs.filter((q,i)=>isCorrect(i)).length;let val=Math.round(c/qs.length*100);$("score").textContent=val;$("grade").textContent=val>=85?"Sangat baik!":val>=70?"Baik, terus berlatih!":val>=50?"Cukup, perlu penguatan materi.":"Ayo pelajari kembali materinya."; $("summary").textContent=`${c} benar dari ${qs.length} soal. Nilai dihitung berdasarkan jawaban yang seluruhnya tepat.`;$("details").textContent=`Benar: ${c} • Salah: ${qs.length-c} • PG: ${qs.filter(q=>q.type==="PG").length} soal • PGK: ${qs.filter(q=>q.type==="PGK").length} soal.`}
+$("retry").onclick=()=>{index=0;answers=Array(qs.length).fill(null);checked=Array(qs.length).fill(false);show("latihan")};
+</script></body></html>
